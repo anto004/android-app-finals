@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">app-finals</string>
+    <string name="title_activity_main">Finals ToDo List</string>
+    <string name="action_settings">Settings</string>
 </resources>
