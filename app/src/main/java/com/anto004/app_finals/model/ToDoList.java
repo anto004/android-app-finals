@@ -44,4 +44,14 @@ public class ToDoList {
     public void setDueDate(String dueDate) {
         this.dueDate = dueDate;
     }
+
+    @Override
+    public String toString() {
+        return "ToDoList{" +
+                "title='" + title + '\'' +
+                ", details='" + details + '\'' +
+                ", additionalInfo='" + additionalInfo + '\'' +
+                ", dueDate='" + dueDate + '\'' +
+                '}';
+    }
 }

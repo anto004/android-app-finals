@@ -3,4 +3,9 @@
     <string name="title_activity_main">Finals ToDo List</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_new_to_do_list">NewToDoList</string>
+    <string name="okay">Ok</string>
+    <string name="title">title</string>
+    <string name="details">description</string>
+    <string name="due_date">due date</string>
+    <string name="additional_info">additional info</string>
 </resources>

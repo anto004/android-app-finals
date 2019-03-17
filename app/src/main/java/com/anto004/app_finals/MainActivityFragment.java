@@ -1,8 +1,11 @@
 package com.anto004.app_finals;
 
+import android.content.Intent;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +19,16 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static android.app.Activity.RESULT_OK;
+
 /**
  * A placeholder fragment containing a simple view.
  */
 public class MainActivityFragment extends Fragment {
+    public static final int REQUEST_CODE = 100;
+    private static final String LOG_TAG = "MainActivityFragment";
+
+    private ToDoListAdapter adapter;
 
     public MainActivityFragment() {
     }
@@ -35,7 +44,8 @@ public class MainActivityFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         final List<ToDoList> toDoLists = setupData();
-        ToDoListAdapter adapter = new ToDoListAdapter(getActivity(), R.layout.list_item, toDoLists);
+
+        adapter = new ToDoListAdapter(getActivity(), R.layout.list_item, toDoLists);
         ListView listView = getActivity().findViewById(R.id.todolist_listview);
         listView.setAdapter(adapter);
 
@@ -47,6 +57,35 @@ public class MainActivityFragment extends Fragment {
                         .show();
             }
         });
+
+        FloatingActionButton fab = getActivity().findViewById(R.id.newToDoList);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), NewToDoList.class);
+                startActivityForResult(intent, REQUEST_CODE);
+            }
+        });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == REQUEST_CODE){
+            if(resultCode == RESULT_OK){
+                Bundle bundle = data.getExtras();
+                String title = bundle.getString(NewToDoListFragment.TITLE);
+                String details = bundle.getString(NewToDoListFragment.DETAILS, "");
+                String additionalInfo = bundle.getString(NewToDoListFragment.ADDITIONAL_INFO, "");
+                String dueDate = bundle.getString(NewToDoListFragment.DUE_DATE, "");
+
+                ToDoList toDoList = new ToDoList(title, details, additionalInfo, dueDate);
+
+                adapter.add(toDoList);
+                adapter.notifyDataSetChanged();
+
+            }
+        }
     }
 
     private List<ToDoList> setupData(){

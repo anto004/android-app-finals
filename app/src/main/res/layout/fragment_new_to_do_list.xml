@@ -22,31 +22,39 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name" />
+            android:hint="@string/title"
+            android:inputType="textPersonName" />
 
         <EditText
             android:id="@+id/details_editText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name" />
+            android:hint="@string/details"
+            android:inputType="textPersonName" />
 
         <EditText
             android:id="@+id/additionalInfo_editText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name" />
+            android:hint="@string/additional_info"
+            android:inputType="textPersonName" />
 
         <EditText
             android:id="@+id/dueDate_editText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:hint="@string/due_date"
             android:inputType="date" />
+
+        <Button
+            android:id="@+id/ok_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="@string/okay" />
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
