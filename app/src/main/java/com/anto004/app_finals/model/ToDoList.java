@@ -1,6 +1,7 @@
 package com.anto004.app_finals.model;
 
 public class ToDoList {
+    private int id;
     private String title;
     private String details;
     private String additionalInfo;
@@ -12,6 +13,11 @@ public class ToDoList {
         this.additionalInfo = additionalInfo;
         this.dueDate = dueDate;
     }
+
+    public ToDoList(){
+
+    }
+
 
     public String getTitle() {
         return title;
@@ -43,6 +49,14 @@ public class ToDoList {
 
     public void setDueDate(String dueDate) {
         this.dueDate = dueDate;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override
