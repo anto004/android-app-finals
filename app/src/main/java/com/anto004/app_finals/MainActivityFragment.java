@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.anto004.app_finals.database.DBHelper;
 import com.anto004.app_finals.model.ToDoList;
 
 import java.util.ArrayList;
@@ -29,6 +30,8 @@ public class MainActivityFragment extends Fragment {
     private static final String LOG_TAG = "MainActivityFragment";
 
     private ToDoListAdapter adapter;
+    private DBHelper dbHelper;
+    List<ToDoList> toDoLists;
 
     public MainActivityFragment() {
     }
@@ -43,7 +46,12 @@ public class MainActivityFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        final List<ToDoList> toDoLists = setupData();
+        try {
+            dbHelper = new DBHelper(getActivity());
+            toDoLists = dbHelper.selectAll();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         adapter = new ToDoListAdapter(getActivity(), R.layout.list_item, toDoLists);
         ListView listView = getActivity().findViewById(R.id.todolist_listview);
@@ -81,12 +89,19 @@ public class MainActivityFragment extends Fragment {
 
                 ToDoList toDoList = new ToDoList(title, details, additionalInfo, dueDate);
 
+                long rowId = 0;
+                if(dbHelper != null){
+                    rowId = dbHelper.insert(toDoList);
+                    toDoList.setId(rowId);
+                }
+
                 adapter.add(toDoList);
                 adapter.notifyDataSetChanged();
 
             }
         }
     }
+
 
     private List<ToDoList> setupData(){
        ToDoList[] toDoLists = new ToDoList[]{
@@ -97,6 +112,5 @@ public class MainActivityFragment extends Fragment {
        };
 
        return new ArrayList<>(Arrays.asList(toDoLists));
-
     }
 }
