@@ -66,6 +66,14 @@ public class MainActivityFragment extends Fragment {
             }
         });
 
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                deleteToDoListItem(position);
+                return true;
+            }
+        });
+
         FloatingActionButton fab = getActivity().findViewById(R.id.newToDoList);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,13 +110,24 @@ public class MainActivityFragment extends Fragment {
         }
     }
 
+    private void deleteToDoListItem(int position){
+        ToDoList toDoList = adapter.getItem(position);
+
+        if(dbHelper != null){
+            boolean result = dbHelper.deleteRecord(toDoList.getId());
+        }
+
+        adapter.remove(toDoList);
+        adapter.notifyDataSetChanged();
+
+    }
 
     private List<ToDoList> setupData(){
        ToDoList[] toDoLists = new ToDoList[]{
                new ToDoList("Grocery Shopping", "Groceries for pasta",
                        "Any supermarket", "04/01/2019"),
-               new ToDoList("Meet up with Jane Doe", "Brunch",
-                       "At a diner", "04/10/2019")
+               new ToDoList("Meet up with Joe", "Brunch",
+                       "All you can eat", "04/10/2019")
        };
 
        return new ArrayList<>(Arrays.asList(toDoLists));

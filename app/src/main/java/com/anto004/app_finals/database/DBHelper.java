@@ -6,7 +6,6 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
-import android.util.Log;
 
 import com.anto004.app_finals.model.ToDoList;
 
@@ -74,8 +73,9 @@ public class DBHelper {
     }
 
     public boolean deleteRecord(long rowId){
-        String WHERE = KEY_ID + "=" + rowId;
-        return db.delete(TABLE_NAME, WHERE, null) > 0;
+        String WHERE = KEY_ID + "=?";
+        String WHERE_ARGS = String.valueOf(rowId);
+        return db.delete(TABLE_NAME, WHERE, new String[]{WHERE_ARGS}) > 0;
     }
 
     public List<ToDoList> selectAll(){
@@ -95,6 +95,7 @@ public class DBHelper {
         if(cursor.moveToFirst()){
             do {
                 ToDoList toDoList = new ToDoList();
+                toDoList.setId(Long.parseLong(cursor.getString(COLUMN_ID)));
                 toDoList.setTitle(cursor.getString(COLUMN_TITLE));
                 toDoList.setDetails(cursor.getString(COLUMN_DETAILS));
                 toDoList.setAdditionalInfo(cursor.getString(COLUMN_ADDITIONAL_INFO));
@@ -136,7 +137,6 @@ public class DBHelper {
         public void onCreate(SQLiteDatabase db) {
             try {
                 db.execSQL(CREATE_TABLE);
-                Log.d(LOG_TAG, "oncreate Database called");
             } catch (SQLException e) {
                 e.printStackTrace();
             }
